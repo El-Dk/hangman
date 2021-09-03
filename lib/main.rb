@@ -28,10 +28,34 @@ def clean_input(hangman)
   letter
 end
 
+def play_game(hangman)
+  hangman.show_hangman
+  hangman.show_guessed
+  hangman.show_fails
+  loop do
+    guess = clean_input(hangman)
+    hangman.take_a_guess(guess)
+    hangman.show_hangman
+    hangman.show_guessed
+    hangman.show_fails
+    if(hangman.winner?)
+      puts "\t\t\t\t------------\n" +
+        "\t\t\t\t  YOU WON!\n" +
+        "\t\t\t\t------------"
+      break
+    end
+    if(hangman.loser?)
+      puts "\t\t\t\t-------------\n" +
+        "\t\t\t\t  YOU LOST!\n" +
+        "\t\t\t\t-------------"
+      puts "The word was: #{hangman.word.join}"
+      break
+    end
+  end
+end
+
 a = Hangman.new(choose_word)
-puts a.show_guessed
-p a.word
-puts a.word.include?('a')
+=begin 
 a.show_hangman
 loop do
   b = clean_input(a)
@@ -40,3 +64,5 @@ loop do
   a.show_guessed
   a.show_fails
 end
+=end
+play_game(a)

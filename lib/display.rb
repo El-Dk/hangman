@@ -81,6 +81,6 @@ module Display
 
   def show_fails
     @guesses.each { |letter| print "\e[9m#{letter}\e[0m " }
-    puts "\n\n"
+    puts "\n\n" unless @guesses.empty?
   end
 end

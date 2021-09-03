@@ -15,7 +15,7 @@ class Hangman
     @rights = []
     build_hangman
   end
-  
+
   def take_a_guess(letter)
     unless @word.include?(letter)
       @fails +=1
@@ -33,6 +33,10 @@ class Hangman
   end
 
   def winner?
-    !guessed_word.include?('_')
+    !@guessed_word.include?('_')
+  end
+
+  def loser?
+    @fails == 6
   end
 end
