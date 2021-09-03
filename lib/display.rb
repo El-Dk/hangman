@@ -73,14 +73,16 @@ module Display
   def show_hangman
     puts @hangman[@fails]
   end
-  
+
   def show_guessed
+    print "\t\t\t     "
     @guessed_word.each { |letter| print "#{letter} " }
     puts "\n\n"
   end
 
   def show_fails
+    print "\t\t\t     "
     @guesses.each { |letter| print "\e[9m#{letter}\e[0m " }
-    puts "\n\n" unless @guesses.empty?
+    puts "\n\n"
   end
 end

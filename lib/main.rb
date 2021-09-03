@@ -16,11 +16,13 @@ def clean_input(hangman)
   loop do
     letter = gets.chomp.upcase
     break if letter.length == 1 && letter.match?(/[A-Z]/)
+
     puts 'Invalid input!'
     print 'Enter a new letter: '
   end
   loop do
     break unless hangman.already_picked?(letter)
+
     puts "ERROR! You've already picked that letter."
     print 'Enter a new letter: '
     letter = clean_input(hangman)
@@ -29,40 +31,33 @@ def clean_input(hangman)
 end
 
 def play_game(hangman)
+  puts "\n\n\n"
+  hangman.show_fails unless hangman.guesses.empty?
   hangman.show_hangman
   hangman.show_guessed
-  hangman.show_fails
   loop do
+    print 'Enter your guess: '
     guess = clean_input(hangman)
     hangman.take_a_guess(guess)
+    puts "\n\n\n"
+    hangman.show_fails unless hangman.guesses.empty?
     hangman.show_hangman
     hangman.show_guessed
-    hangman.show_fails
-    if(hangman.winner?)
-      puts "\t\t\t\t------------\n" +
-        "\t\t\t\t  YOU WON!\n" +
-        "\t\t\t\t------------"
+    if hangman.winner?
+      puts "\n\t\t\t\t------------\n" \
+           "\t\t\t\t  YOU WON!\n" \
+           "\t\t\t\t------------\n\n"
       break
     end
-    if(hangman.loser?)
-      puts "\t\t\t\t-------------\n" +
-        "\t\t\t\t  YOU LOST!\n" +
-        "\t\t\t\t-------------"
-      puts "The word was: #{hangman.word.join}"
-      break
-    end
+    next unless hangman.loser?
+
+    puts "\n\t\t\t\t-------------\n" \
+         "\t\t\t\t  YOU LOST!\n" \
+         "\t\t\t\t-------------\n\n"
+    puts "The word was: #{hangman.word.join}"
+    break
   end
 end
 
 a = Hangman.new(choose_word)
-=begin 
-a.show_hangman
-loop do
-  b = clean_input(a)
-  a.take_a_guess(b)
-  a.show_hangman
-  a.show_guessed
-  a.show_fails
-end
-=end
 play_game(a)
