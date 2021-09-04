@@ -37,6 +37,6 @@ class Hangman
   end
 
   def loser?
-    @fails == 6
+    @fails >= 6
   end
 end
